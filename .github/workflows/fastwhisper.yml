@@ -11,9 +11,7 @@ jobs:
       with:
         fetch-depth: 1
 
-    - uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+    - uses: actions/setup-python@v5     
 
     - name: Ensure FFmpeg
       run: |
@@ -25,9 +23,9 @@ jobs:
           echo "FFmpeg already installed."
         fi
 
-    - name: Install faster-whisper (forced new version)
+    - name: Install faster-whisper
       run: |
-        python -m pip install -U faster-whisper>=0.10.0
+        pip install faster-whisper
 
     - name: Download MP3 from URL file
       run: |
