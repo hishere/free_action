@@ -73,16 +73,16 @@ jobs:
             beam_size=5,
             vad_filter=True,
             vad_parameters=dict(
-                min_silence_ms=500,   # 原来通常 ~200ms
-                speech_pad_ms=400     # 给句首句尾留余量
+                speech_threshold=0.2,     # 越小越容易当成说话
+                silence_threshold=0.3,    # 越小越不容易切
+                min_speech_duration_ms=200,
+                max_speech_duration_s=30,
+                speech_pad_ms=400          # ✅ 日语强烈推荐
             ),
             temperature=0.0,
         )
 
-
-
-        
-
+      
 
     
         base = os.path.splitext(os.path.basename(mp3))[0]
