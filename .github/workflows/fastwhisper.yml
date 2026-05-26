@@ -63,15 +63,8 @@ jobs:
             "$mp3",
             language="ja",
             beam_size=5,
-            vad_filter=True,
-            vad_parameters=dict(
-                speech_threshold=0.5,
-                silence_threshold=0.3,
-                min_speech_duration_ms=150,
-                max_speech_duration_s=30,
-                speech_pad_ms=400
-            ),
-            temperature=0.0,
+            vad_filter=True
+            
         )
 
         base = os.path.splitext(os.path.basename("$mp3"))[0]
