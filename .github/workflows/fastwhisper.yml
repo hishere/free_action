@@ -71,9 +71,12 @@ jobs:
             mp3,
             language="ja",
             beam_size=5,
-            vad_filter=True,          # 用 VAD 合并语音段
-            temperature=(0.0, 0.2),
-            word_timestamps=False     # 不开词级时间戳
+            vad_filter=True,
+            vad_parameters=dict(
+                min_silence_ms=500,   # 原来通常 ~200ms
+                speech_pad_ms=400     # 给句首句尾留余量
+            ),
+            temperature=0.0,
         )
 
 
