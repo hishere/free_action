@@ -38,12 +38,14 @@ jobs:
     - name: Convert to 16kHz mono WAV
       run: |
         ffmpeg -y -i audio/latest.mp3 -ar 16000 -ac 1 audio/input.wav
+        ffmpeg -i audio/input.wav -filter:a "volume=2.0" audio/boosted.wav
+
     
 
     - name: Transcribe latest MP3
       run: |
         mkdir -p output        
-        mp3="audio/input.wav"
+        mp3="audio/boosted.wav"
         python - <<EOF
         from faster_whisper import WhisperModel
         import os
@@ -66,12 +68,17 @@ jobs:
         segments, _ = model.transcribe(
             mp3,
             language="ja",
-            beam_size=10,
-            best_of=10,
-            temperature=(0.0, 0.2),
+            beam_size=5,
+            best_of=5,
+            temperature=[0.0, 0.2, 0.4, 0.6],
             vad_filter=True,
-            vad_parameters=dict(min_silence_duration_ms=500)
+            vad_parameters=dict(
+                min_silence_duration_ms=800,
+                speech_pad_ms=500,
+                threshold=0.3
+            )
         )
+        
 
 
     
