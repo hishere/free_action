@@ -65,19 +65,25 @@ jobs:
             compute_type="int8"
         )
         
-        segments, _ = model.transcribe(
+        segments, info = model.transcribe(
             mp3,
             language="ja",
+            task="transcribe",
+        
             beam_size=5,
             best_of=5,
-            temperature=[0.0, 0.2, 0.4, 0.6],
-            vad_filter=True,
-            vad_parameters=dict(
-                min_silence_duration_ms=800,
-                speech_pad_ms=500,
-                threshold=0.3
-            )
+            temperature=[0.0],
+        
+            vad_filter=False,              # ✅ 彻底关掉
+        
+            no_speech_threshold=0.3,       # 防止误判无语音
+            log_prob_threshold=-0.8,
+            compression_ratio_threshold=2.8,
+        
+            condition_on_previous_text=True,
+            word_timestamps=False,
         )
+
         
 
 
