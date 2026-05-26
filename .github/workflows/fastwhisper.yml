@@ -57,9 +57,10 @@ jobs:
 
     
         mp3 = "$mp3"
+        
         model = WhisperModel(
             "large-v3",
-            compute_type="float16"
+            compute_type="int8"
         )
         
         segments, _ = model.transcribe(
@@ -68,8 +69,10 @@ jobs:
             beam_size=10,
             best_of=10,
             temperature=(0.0, 0.2),
-            vad_filter=True
+            vad_filter=True,
+            vad_parameters=dict(min_silence_duration_ms=500)
         )
+
 
     
         base = os.path.splitext(os.path.basename(mp3))[0]
