@@ -1,7 +1,6 @@
 name: Whisper to VTT
 
-on:
-  workflow_dispatch:
+on: push
 
 jobs:
   whisper:
