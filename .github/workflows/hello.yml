@@ -31,7 +31,7 @@ jobs:
         mkdir -p output
         whisper audio/bb.mp3 \
           --language ja \
-          --model medium \
+          --model base \
           --output_format vtt \
           --output_dir output
 
