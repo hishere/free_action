@@ -70,6 +70,8 @@ jobs:
         segments, info = model.transcribe(
             mp3,
             language="ja",
+            beam_size=1,      
+            vad_filter=True
                                
         )
 
