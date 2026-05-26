@@ -35,11 +35,15 @@ jobs:
         echo "Downloading $url"
         curl -L --fail --retry 3 -o audio/latest.mp3 "$url"
     
+    - name: Convert to 16kHz mono WAV
+      run: |
+        ffmpeg -y -i audio/latest.mp3 -ar 16000 -ac 1 audio/input.wav
+    
 
     - name: Transcribe latest MP3
       run: |
-        mkdir -p output
-        mp3="audio/latest.mp3"
+        mkdir -p output        
+        mp3="audio/input.wav"
         python - <<EOF
         from faster_whisper import WhisperModel
         import os
@@ -47,17 +51,26 @@ jobs:
         def format_time(s):
             h = int(s // 3600)
             m = int((s % 3600) // 60)
-            sec = s % 60
-            return f"{h:02d}:{m:02d}:{sec:06.3f}"
+            sec = int(s % 60)
+            ms = int((s - int(s)) * 1000)
+            return f"{h:02d}:{m:02d}:{sec:02d}.{ms:03d}"
+
     
         mp3 = "$mp3"
-        model = WhisperModel("small", compute_type="int8")
-    
+        model = WhisperModel(
+            "large-v3",
+            compute_type="float16"
+        )
+        
         segments, _ = model.transcribe(
             mp3,
             language="ja",
-            beam_size=5
+            beam_size=10,
+            best_of=10,
+            temperature=(0.0, 0.2),
+            vad_filter=True
         )
+
     
         base = os.path.splitext(os.path.basename(mp3))[0]
         with open(f"output/{base}.vtt", "w", encoding="utf-8") as f:
