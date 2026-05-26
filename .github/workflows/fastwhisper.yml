@@ -35,31 +35,30 @@ jobs:
         python - <<EOF
         from faster_whisper import WhisperModel
         import os
-
-        mp3 = "$mp3"
-        model = WhisperModel("small", compute_type="int8")
-
-        segments, _ = model.transcribe(
-            mp3,
-            language="ja",
-            beam_size=5
-        )
-
-        base = os.path.splitext(os.path.basename(mp3))[0]
-        with open(f"output/{base}.vtt", "w", encoding="utf-8") as f:
-            f.write("WEBVTT\n\n")
-            for seg in segments:
-                start = format_time(seg.start)
-                end = format_time(seg.end)
-                f.write(f"{start} --> {end}\n")
-                f.write(f"{seg.text.strip()}\n\n")
-
+    
         def format_time(s):
             h = int(s // 3600)
             m = int((s % 3600) // 60)
             sec = s % 60
             return f"{h:02d}:{m:02d}:{sec:06.3f}"
+    
+        mp3 = "$mp3"
+        model = WhisperModel("small", compute_type="int8")
+    
+        segments, _ = model.transcribe(
+            mp3,
+            language="ja",
+            beam_size=5
+        )
+    
+        base = os.path.splitext(os.path.basename(mp3))[0]
+        with open(f"output/{base}.vtt", "w", encoding="utf-8") as f:
+            f.write("WEBVTT\n\n")
+            for seg in segments:
+                f.write(f"{format_time(seg.start)} --> {format_time(seg.end)}\n")
+                f.write(f"{seg.text.strip()}\n\n")
         EOF
+    
 
     - name: Upload VTT
       uses: actions/upload-artifact@v4
