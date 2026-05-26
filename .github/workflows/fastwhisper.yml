@@ -28,10 +28,18 @@ jobs:
       run: |
         pip install faster-whisper
 
+    - name: Download MP3 from URL file
+      run: |
+        mkdir -p audio
+        url=$(cat latest.txt | tr -d '\n')
+        echo "Downloading $url"
+        curl -L --fail --retry 3 -o audio/latest.mp3 "$url"
+    
+
     - name: Transcribe latest MP3
       run: |
         mkdir -p output
-        mp3=$(ls -t audio/*.mp3 | head -n 1)
+        mp3="audio/latest.mp3"
         python - <<EOF
         from faster_whisper import WhisperModel
         import os
