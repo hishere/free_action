@@ -8,13 +8,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        fetch-depth: 1
 
-    - name: Install FFmpeg
-      run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+    - uses: actions/setup-python@v5     
+    
+    - name: Ensure FFmpeg
+      run: |
+        if ! command -v ffmpeg >/dev/null 2>&1; then
+          echo "FFmpeg not found, installing..."         
+          sudo apt-get install -y ffmpeg
+        else
+          echo "FFmpeg already installed, skipping."
+        fi
 
     - name: Install Whisper
       run: pip install openai-whisper
@@ -22,9 +29,9 @@ jobs:
     - name: Generate same-name VTT
       run: |
         mkdir -p output
-        whisper audio/test.mp3 \
-          --language zh \
-          --model base \
+        whisper audio/bb.mp3 \
+          --language ja \
+          --model medium \
           --output_format vtt \
           --output_dir output
 
@@ -32,4 +39,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: vtt
-        path: output/test.vtt
+        path: output/bb.vtt
