@@ -60,8 +60,10 @@ jobs:
     
         mp3 = "$mp3"
         
+      
+        
         model = WhisperModel(
-            "large-v3",
+            "medium",
             compute_type="int8"
         )
         
@@ -71,18 +73,18 @@ jobs:
             task="transcribe",
         
             beam_size=5,
-            best_of=5,
-            temperature=[0.0],
+            temperature=(0.0, 0.2),
         
-            vad_filter=False,              # ✅ 彻底关掉
+            vad_filter=False,
         
-            no_speech_threshold=0.3,       # 防止误判无语音
-            log_prob_threshold=-0.8,
-            compression_ratio_threshold=2.8,
+            no_speech_threshold=0.8,     # 懒得管静音
+            log_prob_threshold=-1.2,      # 别太苛刻
+            compression_ratio_threshold=3.0,
         
-            condition_on_previous_text=True,
+            condition_on_previous_text=False,
             word_timestamps=False,
         )
+
 
         
 
