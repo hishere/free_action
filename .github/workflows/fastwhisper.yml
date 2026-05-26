@@ -1,7 +1,6 @@
 name: Faster Whisper JA to VTT
 
-on:
-  workflow_dispatch:
+on: push
 
 jobs:
   whisper:
