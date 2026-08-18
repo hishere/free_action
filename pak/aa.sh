@@ -6,16 +6,6 @@ echo "=== Starting hashcat WPA2 crack workflow ==="
 # 进入脚本所在目录（pak/）
 cd "$(dirname "$0")"
 
-# 检查必要文件
-if [ ! -f "handshake.hc22000" ]; then
-    echo "ERROR: handshake.hc22000 not found in pak/"
-    exit 1
-fi
-
-if [ ! -f "masks.hcmask" ]; then
-    echo "ERROR: masks.hcmask not found in pak/"
-    exit 1
-fi
 
 # 安装依赖
 echo "[*] Installing hashcat..."
