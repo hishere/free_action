@@ -1,0 +1,16 @@
+name: trans and run
+
+on: push
+
+jobs:
+  whisper:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+    - run: |
+        echo 123
+    
+
