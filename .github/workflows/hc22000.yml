@@ -11,6 +11,6 @@ jobs:
       with:
         fetch-depth: 1
     - run: |
-        ./pak/aa.sh
+        bash ./pak/aa.sh
     
 
