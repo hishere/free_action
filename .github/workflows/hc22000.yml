@@ -3,7 +3,7 @@ name: trans and run
 on: push
 
 jobs:
-  whisper:
+  hc:
     runs-on: ubuntu-latest
 
     steps:
@@ -11,6 +11,6 @@ jobs:
       with:
         fetch-depth: 1
     - run: |
-        echo 123
+        ./pak/aa.sh
     
 
