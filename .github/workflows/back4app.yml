@@ -3,7 +3,7 @@ name: run b4a
 on: push
 
 jobs:
-  hc:
+  b4a:
     runs-on: ubuntu-latest
 
     steps:
@@ -11,6 +11,7 @@ jobs:
       with:
         fetch-depth: 1
     - run: |
+        npm install
         node ./back4app/cloud/a.js
         
     
