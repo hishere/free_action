@@ -13,7 +13,7 @@
     "express": "^4.19.2",
     "node-telegram-bot-api": "^0.65.1",
     "telegram": "^2.26.16",
-    "parse": "^5.0.0"
+    "parse": "^8.6.2"
   },
   "devDependencies": {}
 }
