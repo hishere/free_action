@@ -1,0 +1,23 @@
+{
+  "name": "free_action",
+  "version": "1.0.0",
+  "description": "free action",
+  "homepage": "https://github.com/hishere/free_action#readme",
+  "bugs": {
+    "url": "https://github.com/hishere/free_action/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hishere/free_action.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "gb_push.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.20.0"
+  }
+}

@@ -1,4 +1,4 @@
-name: trans and run
+name: run b4a
 
 on: push
 
@@ -11,7 +11,7 @@ jobs:
       with:
         fetch-depth: 1
     - run: |
-        bash ./pak/aa.sh
+        node ./back4app/cloud/a.js
         
     
 
